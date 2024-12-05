@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         raceSelect.appendChild(option);
 
         // Store the iconId for future use
-        race.dataset.iconId = raceIconId;
+        option.dataset.iconId = raceIconId;
       }
 
       // Event listener to update classes based on selected race
