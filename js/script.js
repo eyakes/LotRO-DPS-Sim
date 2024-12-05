@@ -67,21 +67,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update the race icon based on selected race
   function updateRaceIcon(raceId) {
-    const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceId}.png`;
-    raceIcon.src = raceIconUrl;
-    raceIcon.style.display = 'inline';
+    fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/races.xml')
+      .then(response => response.text())
+      .then(data => {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(data, "text/xml");
+  
+        // Find the selected race element
+        const race = Array.from(xmlDoc.getElementsByTagName('race')).find(race => race.getAttribute('id') === raceId);
+  
+        if (race) {
+          const genders = race.getElementsByTagName('gender');
+          if (genders.length > 0) {
+            // Use the first gender's iconId as default
+            const firstGender = genders[0];
+            const genderIconId = firstGender.getAttribute('iconId');
+            if (genderIconId) {
+              const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${genderIconId}.png`;
+              raceIcon.src = raceIconUrl;
+              raceIcon.style.display = 'inline';
+            }
+          }
+        }
+      });
   }
+
 
   // Event listener to update class icon when class is selected
-  classSelect.addEventListener('change', function() {
-    const classId = classSelect.value;
-    updateClassIcon(classId);
+  classSelect.addEventListener('change', function () {
+    const selectedClassId = classSelect.value;
+    updateClassIcon(selectedClassId);
   });
 
-  // Function to update class icon
-  function updateClassIcon(classId) {
-    const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classId}.png`;
-    classIcon.src = classIconUrl;
-    classIcon.style.display = 'inline';
-  }
-});
+// Function to update class icon based on selected classId
+function updateClassIcon(classId) {
+  fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/classes.xml')
+    .then(response => response.text())
+    .then(data => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+
+      // Find the selected class in the XML
+      const classElement = Array.from(xmlDoc.getElementsByTagName('class')).find(cls => cls.getAttribute('id') === classId);
+
+      if (classElement) {
+        const classIconId = classElement.getAttribute('iconId'); // Extract the iconId
+        if (classIconId) {
+          const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classIconId}.png`;
+          classIcon.src = classIconUrl;
+          classIcon.style.display = 'inline';
+        }
+      }
+    })
+    .catch(error => console.error('Error fetching or parsing classes.xml:', error));
+}
