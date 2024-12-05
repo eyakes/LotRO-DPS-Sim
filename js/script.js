@@ -26,13 +26,17 @@ document.addEventListener('DOMContentLoaded', function() {
         raceSelect.appendChild(option);
       }
 
-      // Event listener to update classes based on selected race
-      raceSelect.addEventListener('change', function() {
-        const selectedRaceId = raceSelect.value;
-        updateClassDropdown(selectedRaceId);
-        updateRaceIcon(selectedRaceId);
-      });
+      // Set the first race icon and update classes for the first race
+      updateRaceIcon(raceSelect.value);
+      updateClassDropdown(raceSelect.value);
     });
+
+  // Event listener to update classes based on selected race
+  raceSelect.addEventListener('change', function() {
+    const selectedRaceId = raceSelect.value;
+    updateClassDropdown(selectedRaceId);
+    updateRaceIcon(selectedRaceId);
+  });
 
   // Function to update the class dropdown based on selected race
   function updateClassDropdown(raceId) {
@@ -50,12 +54,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (race) {
           const allowedClasses = race.getElementsByTagName('allowedClass');
-          
+
           // Populate class dropdown based on allowed classes for the race
           for (let allowedClass of allowedClasses) {
             const classId = allowedClass.getAttribute('id');
             const className = classId; // Assuming classId matches the name of the class
-            
+
             const option = document.createElement('option');
             option.value = classId;
             option.textContent = className;
@@ -70,6 +74,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceId}.png`;
     raceIcon.src = raceIconUrl;
     raceIcon.style.display = 'inline';
+
+    // Fallback if race icon fails to load
+    raceIcon.onerror = function() {
+      raceIcon.src = 'path/to/default-race-icon.png';  // Set to a default icon
+    };
   }
 
   // Event listener to update class icon when class is selected
@@ -83,5 +92,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classId}.png`;
     classIcon.src = classIconUrl;
     classIcon.style.display = 'inline';
+
+    // Fallback if class icon fails to load
+    classIcon.onerror = function() {
+      classIcon.src = 'path/to/default-class-icon.png';  // Set to a default icon
+    };
   }
 });
