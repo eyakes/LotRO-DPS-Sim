@@ -1,95 +1,72 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const raceSelect = document.getElementById('race-select');
-  const classSelect = document.getElementById('class-select');
-  const raceIcon = document.getElementById('race-icon');
-  const classIcon = document.getElementById('class-icon');
+document.addEventListener("DOMContentLoaded", function () {
+  const raceSelect = document.getElementById("race-select");
+  const classSelect = document.getElementById("class-select");
+  const raceIcon = document.getElementById("race-icon");
+  const classIcon = document.getElementById("class-icon");
 
-  // Fetch race data from the XML file
-  fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/races.xml')
-    .then(response => response.text())
-    .then(data => {
+  // Fetch race data
+  fetch("https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/races.xml")
+    .then((res) => res.text())
+    .then((data) => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
+      const races = Array.from(xmlDoc.getElementsByTagName("race"));
 
-      // Get all race entries
-      const races = xmlDoc.getElementsByTagName('race');
+      races.forEach((race) => {
+        const raceId = race.getAttribute("id");
+        const raceName = race.getAttribute("legacyLabel");
+        const genderIcon = race.querySelector("gender").getAttribute("iconId");
 
-      // Populate the race dropdown
-      for (let race of races) {
-        const raceId = race.getAttribute('id');
-        const raceName = race.getAttribute('legacyLabel');
-        const raceIconId = race.getAttribute('iconId'); // Extract iconId for the race
-
-        const option = document.createElement('option');
+        const option = document.createElement("option");
         option.value = raceId;
         option.textContent = raceName;
-        option.dataset.iconId = raceIconId; // Store iconId in dataset
-        raceSelect.appendChild(option);
-      }
+        option.dataset.iconId = genderIcon;
 
-      // Event listener to update classes based on selected race
-      raceSelect.addEventListener('change', function () {
-        const selectedRaceId = raceSelect.value;
-        updateClassDropdown(selectedRaceId, xmlDoc);
-        updateRaceIcon(selectedRaceId);
+        raceSelect.appendChild(option);
       });
+
+      updateRaceIcon();
     });
 
-  // Function to update the class dropdown based on selected race
-  function updateClassDropdown(raceId, raceData) {
-    // Clear current class options
-    classSelect.innerHTML = '<option value="">--Please choose an option--</option>';
+  // Fetch class data
+  fetch("https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/classes.xml")
+    .then((res) => res.text())
+    .then((data) => {
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(data, "text/xml");
+      const classes = Array.from(xmlDoc.getElementsByTagName("class"));
 
-    // Find the selected race element
-    const race = Array.from(raceData.getElementsByTagName('race')).find(race => race.getAttribute('id') === raceId);
+      classes.forEach((cls) => {
+        const classId = cls.getAttribute("id");
+        const className = cls.getAttribute("name");
+        const classIcon = cls.getAttribute("iconId");
 
-    if (race) {
-      const allowedClasses = race.getElementsByTagName('allowedClass');
-
-      // Populate class dropdown based on allowed classes for the race
-      for (let allowedClass of allowedClasses) {
-        const classId = allowedClass.getAttribute('id');
-        const className = allowedClass.getAttribute('name') || classId; // Use name if available
-        const classIconId = classId; // Assuming classId directly maps to the class iconId
-
-        const option = document.createElement('option');
+        const option = document.createElement("option");
         option.value = classId;
         option.textContent = className;
-        option.dataset.iconId = classIconId; // Store iconId in dataset
+        option.dataset.iconId = classIcon;
+
         classSelect.appendChild(option);
-      }
-    }
+      });
+
+      updateClassIcon();
+    });
+
+  // Update race icon
+  function updateRaceIcon() {
+    const selectedOption = raceSelect.options[raceSelect.selectedIndex];
+    const iconId = selectedOption.dataset.iconId;
+    raceIcon.src = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${iconId}.png`;
   }
 
-  // Function to update the race icon based on selected race
-  function updateRaceIcon(raceId) {
-    const raceOption = raceSelect.querySelector(`option[value='${raceId}']`);
-    const raceIconId = raceOption ? raceOption.dataset.iconId : null;
-
-    if (raceIconId) {
-      raceIcon.src = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceIconId}.png`;
-      raceIcon.style.display = 'inline';
-    } else {
-      raceIcon.style.display = 'none';
-    }
+  // Update class icon
+  function updateClassIcon() {
+    const selectedOption = classSelect.options[classSelect.selectedIndex];
+    const iconId = selectedOption.dataset.iconId;
+    classIcon.src = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${iconId}.png`;
   }
 
-  // Event listener to update class icon when class is selected
-  classSelect.addEventListener('change', function () {
-    const classId = classSelect.value;
-    updateClassIcon(classId);
-  });
-
-  // Function to update class icon
-  function updateClassIcon(classId) {
-    const classOption = classSelect.querySelector(`option[value='${classId}']`);
-    const classIconId = classOption ? classOption.dataset.iconId : null;
-
-    if (classIconId) {
-      classIcon.src = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classIconId}.png`;
-      classIcon.style.display = 'inline';
-    } else {
-      classIcon.style.display = 'none';
-    }
-  }
+  // Event listeners
+  raceSelect.addEventListener("change", updateRaceIcon);
+  classSelect.addEventListener("change", updateClassIcon);
 });
