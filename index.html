@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <h1>Lord of the Rings Online DPS Calculator</h1>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lord of the Rings Online DPS Calculator</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
 </head>
-
 <body>
-    <select name="class" id="class-select">
-        <option value="">--Choose your class--</option>
+  <h1>Lord of the Rings Online DPS Calculator</h1>
+
+  <!-- Race Dropdown -->
+  <label for="race-select">Choose your race:</label>
+  <div class="dropdown-container">
+    <img id="race-icon" src="" alt="Race Icon" style="display: none; width: 50px; height: 50px;">
+    <select name="race" id="race-select">
+      <option value="">--Please choose an option--</option>
     </select>
+  </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/script.js"></script>
+  <!-- Class Dropdown -->
+  <label for="class-select">Choose your class:</label>
+  <div class="dropdown-container">
+    <img id="class-icon" src="" alt="Class Icon" style="display: none; width: 50px; height: 50px;">
+    <select name="class" id="class-select">
+      <option value="">--Please choose an option--</option>
+    </select>
+  </div>
+
 </body>
-
 </html>
