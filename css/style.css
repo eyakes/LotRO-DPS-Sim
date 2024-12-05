@@ -1,16 +1,21 @@
 body {
+  background-color: #add8e6; /* Light Blue */
   font-family: Palatino, sans-serif;
-  margin: 20px;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
   text-align: center;
+  color: #333; /* Dark text for contrast */
+  padding-top: 20px;
 }
 
 label {
   font-weight: bold;
   display: block;
   margin-top: 10px;
+  color: #333; /* Dark text color for readability */
 }
 
 .dropdown-container {
