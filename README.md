@@ -1,16 +1,14 @@
+# LotRO DPS Simulator Roadmap
+
+This document outlines the roadmap for developing a comprehensive damage calculator and DPS simulator for Lord of the Rings Online (LotRO). The roadmap is broken down into phases and prioritized. This is a free to use project, please reach out if you want to collaborate @galiplays on Discord. I am utilizing the project to practice Git, Python, and eventually some ML/modeling.
+
+Thank you to the below users for the base data for the sim:
+https://github.com/LotroCompanion
+https://github.com/Giseldah
+
 ---
-title: "Damage Calculator + DPS Simulator Roadmap"
-output: html_document
----
 
-# **Damage Calculator + DPS Simulator Roadmap**
-
-This document outlines the roadmap for developing a comprehensive damage calculator and DPS simulator for Lord of the Rings Online (LOTRO). The roadmap is broken down into phases with descriptions of tasks and the expected timeline.
-
----
-
-## **Phase 1: Foundation**
-**Duration**: Month 1  
+## Phase 1: Foundation
 Initial phase focuses on the basic structure and functionality of the damage calculator.
 
 1. **Talent Calculator**  
@@ -35,9 +33,10 @@ Initial phase focuses on the basic structure and functionality of the damage cal
    - **Frontend**:  
      - Create a dropdown for race selection.
      - Display racial bonuses associated with the selected race.
+     - Create a tab for racial trait slotting/selection.
    - **Backend**:  
      - Define racial trait data with associated stat bonuses.
-     - Implement logic to retrieve the correct racial bonuses when a user selects a race.
+     - Implement logic to retrieve the correct racial bonuses and traits when a user selects a race.
 
 4. **Virtue Traits**  
    - **Frontend**:  
@@ -50,8 +49,7 @@ Initial phase focuses on the basic structure and functionality of the damage cal
 
 ---
 
-## **Phase 2: Advanced Character Customization**
-**Duration**: Months 2–3  
+## Phase 2: Advanced Character Customization
 This phase includes deeper customization options and builds upon the foundation.
 
 5. **Gear Builder**  
@@ -75,15 +73,14 @@ This phase includes deeper customization options and builds upon the foundation.
 7. **Consumables and Buffs**  
    - **Frontend**:  
      - Create a list of consumables and buffs (e.g., food, potions, temporary boosts).
-     - Allow users to select which buffs or consumables they have active.
+     - Allow users to select which buffs or consumables they have active as well as a set suite to apply.
    - **Backend**:  
      - Define consumable and buff data with their effects on stats or DPS.
      - Implement logic to apply buffs and consumables to the character's stats.
 
 ---
 
-## **Phase 3: Calculation and Simulation**
-**Duration**: Months 4–5  
+## Phase 3: Calculation and Simulation 
 This phase focuses on developing the calculations required for DPS simulation and stat modeling.
 
 8. **Ratings Calculator**  
@@ -112,8 +109,7 @@ This phase focuses on developing the calculations required for DPS simulation an
 
 ---
 
-## **Phase 4: Visualization and Advanced Features**
-**Duration**: Months 6–7  
+## Phase 4: Visualization and Advanced Features
 This phase focuses on providing visual outputs and more detailed calculations for users.
 
 11. **DPS Simulation Outputs**  
@@ -142,15 +138,10 @@ This phase focuses on providing visual outputs and more detailed calculations fo
 
 ---
 
-## **Future Phases: Expansion and Optimization**
-**Duration**: Months 8 and beyond  
+## Future Phases: Expansion and Optimization 
 In this phase, additional features and optimizations will be introduced.
 
-1. **PvP Simulations**  
-   - Add PvP-specific simulations and calculations (e.g., damage normalization, player mitigation).
-2. **User Profiles and Progress Tracking**  
-   - Allow users to save their builds, track progression, and compare DPS outputs over time.
-3. **Integration with LotRO API**  
+14. **User Profiles and Progress Tracking**  
+   - Allow users to save their builds, track progression, and compare DPS outputs.
+15. **Integration with LotRO API**  
    - Pull real-time data from the LotRO game API for up-to-date character information.
-
----
