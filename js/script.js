@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function () {
   function populateRaceDropdown() {
     if (!raceData) return;
     const races = raceData.getElementsByTagName('race');
-    raceSelect.innerHTML = '<option value="">--Please choose a race--</option>';
     for (let race of races) {
       const raceId = race.getAttribute('id');
       const raceName = race.getAttribute('legacyLabel');
@@ -51,9 +50,9 @@ document.addEventListener('DOMContentLoaded', function () {
   function updateClassDropdown(raceId) {
     if (!raceData) return;
     const race = Array.from(raceData.getElementsByTagName('race')).find(r => r.getAttribute('id') === raceId);
-    classSelect.innerHTML = '<option value="">--Please choose a class--</option>';
     if (race) {
       const allowedClasses = race.getElementsByTagName('allowedClass');
+      classSelect.innerHTML = ''; // Clear the dropdown
       for (let allowedClass of allowedClasses) {
         const classId = allowedClass.getAttribute('id');
         const className = allowedClass.getAttribute('name') || classId; // Use name if available
@@ -62,6 +61,8 @@ document.addEventListener('DOMContentLoaded', function () {
         option.textContent = className;
         classSelect.appendChild(option);
       }
+    } else {
+      classSelect.innerHTML = ''; // Clear if no race selected
     }
   }
 
