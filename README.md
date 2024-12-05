@@ -3,6 +3,7 @@
 This document outlines the roadmap for developing a comprehensive damage calculator and DPS simulator for Lord of the Rings Online (LotRO). The roadmap is broken down into phases and prioritized. This is a free to use project, please reach out if you want to collaborate @galiplays on Discord. I am utilizing the project to practice Git, Python, and eventually some ML/modeling.
 
 Thank you to the below users for the base data for the sim:
+
 https://github.com/LotroCompanion
 https://github.com/Giseldah
 
