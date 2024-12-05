@@ -19,21 +19,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const raceId = race.getAttribute('id');
         const raceName = race.getAttribute('legacyLabel');
         const raceIconId = race.getAttribute('iconId'); // Extract iconId for the race
-
+        
         const option = document.createElement('option');
         option.value = raceId;
         option.textContent = raceName;
         raceSelect.appendChild(option);
 
         // Store the iconId for future use
-        option.dataset.iconId = raceIconId;
+        race.dataset.iconId = raceIconId;
       }
 
       // Event listener to update classes based on selected race
       raceSelect.addEventListener('change', function() {
         const selectedRaceId = raceSelect.value;
-        updateClassDropdown(selectedRaceId); // Update class dropdown
-        updateRaceIcon(selectedRaceId); // Update race icon
+        updateClassDropdown(selectedRaceId);
+        updateRaceIcon(selectedRaceId);
       });
     });
 
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const race = Array.from(xmlDoc.getElementsByTagName('race')).find(race => race.getAttribute('id') === raceId);
 
         // Clear current class options
-        classSelect.innerHTML = '<option value="">--Please choose a class--</option>';
+        classSelect.innerHTML = '<option value="">--Please choose an option--</option>';
 
         if (race) {
           const allowedClasses = race.getElementsByTagName('allowedClass');
@@ -59,7 +59,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const classId = allowedClass.getAttribute('id');
             const className = classId; // Assuming classId matches the name of the class
             const classIconId = getClassIconId(classId); // Get the iconId for the class
-
+            
             const option = document.createElement('option');
             option.value = classId;
             option.textContent = className;
@@ -80,12 +80,10 @@ document.addEventListener('DOMContentLoaded', function() {
       const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceIconId}.png`;
       raceIcon.src = raceIconUrl;
       raceIcon.style.display = 'inline';
-    } else {
-      raceIcon.style.display = 'none';
     }
   }
 
-  // Function to get the class iconId from classes.xml based on the classId
+  // Function to get the class iconId from classes.xml (fetching actual iconId)
   function getClassIconId(classId) {
     return fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/classes.xml')
       .then(response => response.text())
