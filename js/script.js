@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Get all race entries
       const races = xmlDoc.getElementsByTagName('race');
+      console.log(races); // Debugging: check if races are properly parsed
 
       // Populate the race dropdown
       for (let race of races) {
@@ -66,12 +67,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update the race icon based on selected race
   function updateRaceIcon(raceId) {
+    // Debugging: Log the raceId to ensure it's correct
+    console.log('Selected race ID:', raceId);
     const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceId}.png`;
+    console.log('Race icon URL:', raceIconUrl); // Debugging line
     raceIcon.src = raceIconUrl;
     raceIcon.style.display = 'inline';
-    
+
     // Fallback icon in case the image fails to load
     raceIcon.onerror = function() {
+      console.log('Failed to load race icon, using fallback');
       raceIcon.src = 'https://via.placeholder.com/50x50?text=Race+Icon';
     };
   }
@@ -84,12 +89,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update class icon
   function updateClassIcon(classId) {
+    // Debugging: Log the classId to ensure it's correct
+    console.log('Selected class ID:', classId);
     const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classId}.png`;
+    console.log('Class icon URL:', classIconUrl); // Debugging line
     classIcon.src = classIconUrl;
     classIcon.style.display = 'inline';
-    
+
     // Fallback icon in case the image fails to load
     classIcon.onerror = function() {
+      console.log('Failed to load class icon, using fallback');
       classIcon.src = 'https://via.placeholder.com/50x50?text=Class+Icon';
     };
   }
