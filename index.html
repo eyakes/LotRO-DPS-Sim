@@ -3,30 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lord of the Rings Online DPS Calculator</title>
+  <title>LOTR Online Talent Calculator</title>
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js" defer></script>
 </head>
 <body>
-  <h1>Lord of the Rings Online DPS Calculator</h1>
-
-  <!-- Race Dropdown -->
-  <label for="race-select">Choose your race:</label>
-  <div class="dropdown-container">
-    <img id="race-icon" src="" alt="Race Icon" style="display: none; width: 50px; height: 50px;">
-    <select name="race" id="race-select">
-      <option value="">--Please choose an option--</option>
-    </select>
+  <h1>Lord of the Rings Online Talent Calculator</h1>
+  <div class="container">
+    <div class="icon">
+      <img id="race-icon" src="https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/1091602757.png" alt="Race Icon">
+    </div>
+    <select id="race-select"></select>
+    <span>|</span>
+    <div class="icon">
+      <img id="class-icon" src="https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/1090552269.png" alt="Class Icon">
+    </div>
+    <select id="class-select"></select>
+    <span>|</span>
+    <input type="number" id="level-input" min="1" max="150" value="1">
   </div>
-
-  <!-- Class Dropdown -->
-  <label for="class-select">Choose your class:</label>
-  <div class="dropdown-container">
-    <img id="class-icon" src="" alt="Class Icon" style="display: none; width: 50px; height: 50px;">
-    <select name="class" id="class-select">
-      <option value="">--Please choose an option--</option>
-    </select>
-  </div>
-
+  <script src="js/script.js"></script>
 </body>
 </html>
