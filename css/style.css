@@ -1,18 +1,26 @@
+body {
+  font-family: Palatino, sans-serif;
+  margin: 20px;
+}
+
 h1 {
-  font-family: Palatino;
-  font-size: 20px;
-  font-style: normal;
-  font-variant: small-caps;
-  font-weight: 700;
-  line-height: 20px;
+  text-align: center;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
+.dropdown-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
 select {
-  font-family: Palatino;
-  font-size: 12px;
-  font-style: normal;
-  font-variant: normal;
-  font-weight: 400;
-  line-height: 12px;
-  padding: 2px 5px;
+  margin-left: 10px;
+  padding: 5px;
+  font-size: 16px;
 }
