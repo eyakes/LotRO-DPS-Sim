@@ -1,0 +1,18 @@
+h1 {
+  font-family: Palatino;
+  font-size: 20px;
+  font-style: normal;
+  font-variant: small-caps;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+sel {
+  font-family: Palatino;
+  font-size: 12px;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  line-height: 12px;
+  padding: 2px 5px;
+}
