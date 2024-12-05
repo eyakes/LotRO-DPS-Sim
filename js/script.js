@@ -3,23 +3,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const classSelect = document.getElementById('class-select');
   const raceIcon = document.getElementById('race-icon');
   const classIcon = document.getElementById('class-icon');
-
-  // Fetch race data from the XML file
+  
+  let raceData = {}; // Cache race data
+  let classData = {}; // Cache class data
+  
+  // Fetch race data from the XML file once and cache it
   fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/races.xml')
     .then(response => response.text())
     .then(data => {
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(data, "text/xml");
 
-      // Get all race entries
-      const races = xmlDoc.getElementsByTagName('race');
+      // Store the parsed data in the cache
+      raceData = xmlDoc;
 
       // Populate the race dropdown
+      const races = xmlDoc.getElementsByTagName('race');
       for (let race of races) {
         const raceId = race.getAttribute('id');
         const raceName = race.getAttribute('legacyLabel');
-        const raceCode = race.getAttribute('code');
-
+        
         const option = document.createElement('option');
         option.value = raceId;
         option.textContent = raceName;
@@ -38,35 +41,40 @@ document.addEventListener('DOMContentLoaded', function() {
     updateRaceIcon(selectedRaceId);
   });
 
-  // Function to update the class dropdown based on selected race
+  // Function to update the class dropdown based on selected race (using cached data)
   function updateClassDropdown(raceId) {
-    fetch('https://raw.githubusercontent.com/eyakes/lotro-data/master/lore/races.xml')
-      .then(response => response.text())
-      .then(data => {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(data, "text/xml");
+    // If class data is cached, use it directly
+    if (classData[raceId]) {
+      populateClassDropdown(classData[raceId]);
+    } else {
+      // Fetch and cache class data if not already cached
+      const race = Array.from(raceData.getElementsByTagName('race')).find(race => race.getAttribute('id') === raceId);
+      
+      if (race) {
+        const allowedClasses = race.getElementsByTagName('allowedClass');
+        
+        // Cache the class data for the selected race
+        classData[raceId] = allowedClasses;
 
-        // Find the selected race element
-        const race = Array.from(xmlDoc.getElementsByTagName('race')).find(race => race.getAttribute('id') === raceId);
+        // Populate class dropdown
+        populateClassDropdown(allowedClasses);
+      }
+    }
+  }
 
-        // Clear current class options
-        classSelect.innerHTML = '<option value="">--Please choose an option--</option>';
+  // Function to populate the class dropdown
+  function populateClassDropdown(allowedClasses) {
+    classSelect.innerHTML = '<option value="">--Please choose an option--</option>';
+    
+    for (let allowedClass of allowedClasses) {
+      const classId = allowedClass.getAttribute('id');
+      const className = classId; // Assuming classId matches the name of the class
 
-        if (race) {
-          const allowedClasses = race.getElementsByTagName('allowedClass');
-
-          // Populate class dropdown based on allowed classes for the race
-          for (let allowedClass of allowedClasses) {
-            const classId = allowedClass.getAttribute('id');
-            const className = classId; // Assuming classId matches the name of the class
-
-            const option = document.createElement('option');
-            option.value = classId;
-            option.textContent = className;
-            classSelect.appendChild(option);
-          }
-        }
-      });
+      const option = document.createElement('option');
+      option.value = classId;
+      option.textContent = className;
+      classSelect.appendChild(option);
+    }
   }
 
   // Function to update the race icon based on selected race
