@@ -1,31 +1,41 @@
 body {
-  background-color: #add8e6; /* Light Blue */
-  font-family: Palatino, sans-serif;
-  margin: 0;
-  padding: 0;
+  background-color: lightblue;
+  font-family: Arial, sans-serif;
+  padding: 20px;
 }
 
 h1 {
   text-align: center;
-  color: #333; /* Dark text for contrast */
-  padding-top: 20px;
+  font-size: 2em;
 }
 
-label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
-  color: #333; /* Dark text color for readability */
+.container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
-.dropdown-container {
+.select-container {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
 select {
-  margin-left: 10px;
+  margin-top: 10px;
   padding: 5px;
-  font-size: 16px;
+  font-size: 1.2em;
+  width: 200px;
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon-container img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
 }
