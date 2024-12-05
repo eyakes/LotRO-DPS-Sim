@@ -13,17 +13,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Get all race entries
       const races = xmlDoc.getElementsByTagName('race');
-      console.log(races); // Debugging: check if races are properly parsed
 
       // Populate the race dropdown
       for (let race of races) {
         const raceId = race.getAttribute('id');
         const raceName = race.getAttribute('legacyLabel');
+        const raceIconId = race.getAttribute('iconId'); // Extract iconId for the race
         
         const option = document.createElement('option');
         option.value = raceId;
         option.textContent = raceName;
         raceSelect.appendChild(option);
+
+        // Store the iconId for future use
+        race.dataset.iconId = raceIconId;
       }
 
       // Event listener to update classes based on selected race
@@ -55,11 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
           for (let allowedClass of allowedClasses) {
             const classId = allowedClass.getAttribute('id');
             const className = classId; // Assuming classId matches the name of the class
+            const classIconId = getClassIconId(classId); // Get the iconId for the class
             
             const option = document.createElement('option');
             option.value = classId;
             option.textContent = className;
             classSelect.appendChild(option);
+
+            // Store the class iconId for future use
+            option.dataset.iconId = classIconId;
           }
         }
       });
@@ -67,18 +74,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update the race icon based on selected race
   function updateRaceIcon(raceId) {
-    // Debugging: Log the raceId to ensure it's correct
-    console.log('Selected race ID:', raceId);
-    const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceId}.png`;
-    console.log('Race icon URL:', raceIconUrl); // Debugging line
-    raceIcon.src = raceIconUrl;
-    raceIcon.style.display = 'inline';
+    const race = document.querySelector(`#race-select option[value='${raceId}']`);
+    const raceIconId = race ? race.dataset.iconId : null;
+    if (raceIconId) {
+      const raceIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${raceIconId}.png`;
+      raceIcon.src = raceIconUrl;
+      raceIcon.style.display = 'inline';
+    }
+  }
 
-    // Fallback icon in case the image fails to load
-    raceIcon.onerror = function() {
-      console.log('Failed to load race icon, using fallback');
-      raceIcon.src = 'https://via.placeholder.com/50x50?text=Race+Icon';
-    };
+  // Function to get the class iconId from classes.xml (assumed to be pre-loaded elsewhere)
+  function getClassIconId(classId) {
+    // Hardcoded mapping or fetch the classes.xml to extract iconId for the class
+    // For example: you could add logic to fetch the classes XML and parse it for each classId
+    // For now, assuming classId directly maps to the class iconId:
+    return classId;
   }
 
   // Event listener to update class icon when class is selected
@@ -89,17 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Function to update class icon
   function updateClassIcon(classId) {
-    // Debugging: Log the classId to ensure it's correct
-    console.log('Selected class ID:', classId);
-    const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classId}.png`;
-    console.log('Class icon URL:', classIconUrl); // Debugging line
-    classIcon.src = classIconUrl;
-    classIcon.style.display = 'inline';
-
-    // Fallback icon in case the image fails to load
-    classIcon.onerror = function() {
-      console.log('Failed to load class icon, using fallback');
-      classIcon.src = 'https://via.placeholder.com/50x50?text=Class+Icon';
-    };
+    const classOption = document.querySelector(`#class-select option[value='${classId}']`);
+    const classIconId = classOption ? classOption.dataset.iconId : null;
+    if (classIconId) {
+      const classIconUrl = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/classes/${classIconId}.png`;
+      classIcon.src = classIconUrl;
+      classIcon.style.display = 'inline';
+    }
   }
 });
