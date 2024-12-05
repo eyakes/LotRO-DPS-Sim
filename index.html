@@ -5,24 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lord of the Rings Online DPS Calculator</title>
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
 </head>
 <body>
   <h1>Lord of the Rings Online DPS Calculator</h1>
-  
+
+  <!-- Race Dropdown -->
   <label for="race-select">Choose your race:</label>
-  <select id="race-select">
-    <option value="">--Please choose an option--</option>
-  </select>
-  <img id="race-icon" alt="Race Icon" style="display:none; width: 40px; height: 40px;">
+  <div class="dropdown-container">
+    <img id="race-icon" src="" alt="Race Icon" style="display: none; width: 50px; height: 50px;">
+    <select name="race" id="race-select">
+      <option value="">--Please choose an option--</option>
+    </select>
+  </div>
 
-  <br><br>
-
+  <!-- Class Dropdown -->
   <label for="class-select">Choose your class:</label>
-  <select id="class-select">
-    <option value="">--Please choose an option--</option>
-  </select>
-  <img id="class-icon" alt="Class Icon" style="display:none; width: 40px; height: 40px;">
-  
-  <script src="js/script.js"></script>
+  <div class="dropdown-container">
+    <img id="class-icon" src="" alt="Class Icon" style="display: none; width: 50px; height: 50px;">
+    <select name="class" id="class-select">
+      <option value="">--Please choose an option--</option>
+    </select>
+  </div>
+
 </body>
 </html>
