@@ -50,44 +50,48 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Populate class dropdown based on the selected race
-  function filterClasses() {
-    const selectedRaceId = raceSelect.value;
-    const selectedRace = racesData.find((race) => race.getAttribute("id") === selectedRaceId);
-    const allowedClasses = Array.from(selectedRace.getElementsByTagName("allowedClass")).map(
-      (allowedClass) => allowedClass.getAttribute("id")
-    );
+// Populate the class dropdown based on the selected race
+function filterClasses() {
+  const selectedRaceId = raceSelect.value;
+  const selectedRace = racesData.find((race) => race.getAttribute("id") === selectedRaceId);
 
-    classSelect.innerHTML = ""; // Clear existing options
+  // Get allowedClass IDs for the selected race
+  const allowedClasses = Array.from(selectedRace.getElementsByTagName("allowedClass")).map(
+    (allowedClass) => allowedClass.getAttribute("id")
+  );
 
-    let firstCompatibleClassId = null;
+  classSelect.innerHTML = ""; // Clear existing options
 
-    classesData.forEach((cls) => {
-      const classId = cls.getAttribute("id");
-      const className = cls.getAttribute("name");
-      const classIcon = cls.getAttribute("iconId");
+  let firstCompatibleClassId = null;
 
-      if (allowedClasses.includes(classId)) {
-        const option = document.createElement("option");
-        option.value = classId;
-        option.textContent = className;
-        option.dataset.iconId = classIcon;
+  // Filter and populate the class dropdown
+  classesData.forEach((cls) => {
+    const classId = cls.getAttribute("id");
+    const className = cls.getAttribute("name");
+    const classIcon = cls.getAttribute("iconId");
 
-        classSelect.appendChild(option);
+    if (allowedClasses.includes(classId)) {
+      const option = document.createElement("option");
+      option.value = classId;
+      option.textContent = className;
+      option.dataset.iconId = classIcon;
 
-        // Set the first compatible class as default
-        if (!firstCompatibleClassId) {
-          firstCompatibleClassId = classId;
-        }
+      classSelect.appendChild(option);
+
+      // Set the first compatible class
+      if (!firstCompatibleClassId) {
+        firstCompatibleClassId = classId;
       }
-    });
-
-    if (classSelect.value !== firstCompatibleClassId) {
-      classSelect.value = firstCompatibleClassId;
     }
+  });
 
-    updateClassIcon();
+  // Default to the first compatible class if needed
+  if (!allowedClasses.includes(classSelect.value)) {
+    classSelect.value = firstCompatibleClassId;
   }
+
+  updateClassIcon(); // Update the displayed class icon
+}
 
   // Update race icon
   function updateRaceIcon() {
@@ -115,6 +119,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Event listeners
-  raceSelect.addEventListener("change", updateRaceIcon);
   classSelect.addEventListener("change", updateClassIcon);
+  raceSelect.addEventListener("change", () => {
+  updateRaceIcon();
+  filterClasses(); // Update class dropdown when race changes
 });
