@@ -37,14 +37,14 @@ document.addEventListener("DOMContentLoaded", function () {
   function populateRaceDropdown() {
     raceSelect.innerHTML = ""; // Clear existing options
     racesData.forEach((race) => {
-      const raceId = race.getAttribute("id");
+      const race = race.getAttribute("");
       const raceName = race.getAttribute("legacyLabel");
-      const genderIcon = race.querySelector("gender").getAttribute("iconId");
+      const genderIcon = race.querySelector("gender").getAttribute("icon");
 
       const option = document.createElement("option");
-      option.value = raceId;
+      option.value = race;
       option.textContent = raceName;
-      option.dataset.iconId = genderIcon;
+      option.dataset.icon = genderIcon;
 
       raceSelect.appendChild(option);
     });
@@ -66,7 +66,7 @@ function filterClasses() {
 
   // Filter and populate the class dropdown
   classesData.forEach((cls) => {
-    const classId = cls.getAttribute("id");
+    const classId = cls.getAttribute("key");
     const className = cls.getAttribute("name");
     const classIcon = cls.getAttribute("iconId");
 
@@ -94,7 +94,7 @@ function filterClasses() {
 }
 
   // Update race icon
-  function updateRaceIcon() {
+  function updateRaceIcon() {id
     const selectedOption = raceSelect.options[raceSelect.selectedIndex];
     const iconId = selectedOption.dataset.iconId;
     raceIcon.src = `https://raw.githubusercontent.com/eyakes/lotro-icons/master/races/${iconId}.png`;
